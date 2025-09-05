@@ -21,17 +21,6 @@ printf 常用占位符
 %p 指针地址，%zu 打印 size_t
 例：printf("age=%d, pi=%.2f, name=%s\n", 23, 3.1415, "Alice");
 
-表达式（算对和不踩坑）
-
-算术：+ - * / %（整数除法会丢小数，7/2 = 3）
-比较：== != < > <= >=（结果是 0 或 1）
-逻辑：&& || !（有短路特性）
-自增：i++、++i（不要在一个表达式里多次改同一变量）
-转换：(double)a/b 能得到小数
-小例子：int a=7,b=2; double r=(double)a/b; // r=3.5
-
-
-
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -53,6 +42,50 @@ int main(void) {
     return 0;
 }
 
+表达式（算对和不踩坑）
+
+算术：+ - * / %（整数除法会丢小数，7/2 = 3）
+比较：== != < > <= >=（结果是 0 或 1）
+逻辑：&& || !（有短路特性）
+自增：i++、++i（不要在一个表达式里多次改同一变量）
+转换：(double)a/b 能得到小数
+小例子：int a=7,b=2; double r=(double)a/b; // r=3.5
+
+double 和 size_t 核心区别（简单版）
+
+含义不同
+size_t：表示“非负的个数/长度/字节数”的整数类型（没有小数）。
+double：表示带小数的实数（可以有小数部分）。
+精确性
+size_t：整数运算，结果精确。
+double：浮点数，可能出现舍入误差（比如显示成 8191.999999）。
+使用场景
+计数/长度/字节数/数组大小等，用 size_t 最合适。
+需要小数的量（比如 1.5 MB）用 double 做中间计算，但最终要落回整数字节数。
+#include <stdio.h>
+#include <stddef.h>
+
+int main(void){
+    size_t kb = 8;
+
+    // 推荐：整数精确计算
+    size_t bytes1 = kb * 1024;
+    printf("size_t 结果: %zu\n", bytes1);   // 8192，精确
+
+    // 可行但不推荐：用 double 表示字节数
+    double bytes2 = kb * 1024;              // 这里通常打印 8192.0，但本质是浮点
+    printf("double 结果: %.0f\n", bytes2);  // 需要用 %.0f 去掉小数
+
+    return 0;
+}
+什么时候可能出问题
+
+用 double 做更多运算后打印，可能出现 8191.999999 之类的显示误差。
+字节数、数组长度、循环次数这些本来就不该有小数，用 double 表达不合适。
+结论
+
+这类“KB/MB→字节”的结果是整数，请用 size_t。只有在确实需要小数（比如 1.5MB）时，用 double 作为中间值，最后再转换为整数字节数。
+
 
 
 练习1：定义三个整数 a=7, b=2, c=10，打印它们的和与平均值（平均值用 double，保留2位小数）。格式示例：sum=19, avg=6.33
@@ -68,3 +101,16 @@ int main(void){
     printf("avg = %.2f\n", avg);//打印平均值时可用 %.2f 保留两位小数
     return 0;
 }
+
+练习2：定义 size_t bytes = 4096，打印：buffer bytes=4096（用 %zu）
+#include <stdio.h>
+#include <stddef.h>  // 提供 size_t
+
+int main(void){
+    size_t bytes = 4096;  //size_t 专门用来表示“大小/长度”的整数类型
+    printf("buffer bytes=%zu\n", bytes); //%zu 按十进制输出 size_t 的值；\n 换行
+    return 0;
+}
+
+
+
