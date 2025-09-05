@@ -11,6 +11,27 @@ bool：布尔（需要 #include <stdbool.h>，值为 0 或 1）
 size_t：表示“大小/长度”，打印用 %zu
 常用占位符：%d(int)、%lld(long long)、%f(double)、%.2f(保留2位小数)、%d(bool)、%zu(size_t)
 
+输入输出（推荐用法）
+
+printf 常用占位符
+%d int，%u unsigned int
+%ld/%lld long/long long
+%f double（可用 %.2f 控制小数位）
+%c 字符，%s 字符串
+%p 指针地址，%zu 打印 size_t
+例：printf("age=%d, pi=%.2f, name=%s\n", 23, 3.1415, "Alice");
+
+表达式（算对和不踩坑）
+
+算术：+ - * / %（整数除法会丢小数，7/2 = 3）
+比较：== != < > <= >=（结果是 0 或 1）
+逻辑：&& || !（有短路特性）
+自增：i++、++i（不要在一个表达式里多次改同一变量）
+转换：(double)a/b 能得到小数
+小例子：int a=7,b=2; double r=(double)a/b; // r=3.5
+
+
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
