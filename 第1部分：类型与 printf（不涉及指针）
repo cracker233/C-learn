@@ -10,3 +10,24 @@ double：小数
 bool：布尔（需要 #include <stdbool.h>，值为 0 或 1）
 size_t：表示“大小/长度”，打印用 %zu
 常用占位符：%d(int)、%lld(long long)、%f(double)、%.2f(保留2位小数)、%d(bool)、%zu(size_t)
+
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+int main(void) {
+    // 展示不同类型的字节数
+    printf("int=%zu, long long=%zu, double=%zu, bool=%zu, size_t=%zu\n",
+           sizeof(int), sizeof(long long), sizeof(double), sizeof(bool), sizeof(size_t));
+
+    // 按格式输出
+    int age = 20;
+    long long population = 1400000000LL;
+    double pi = 3.1415926;
+    bool ok = 1; // 1 表示真，0 表示假
+
+    printf("age=%d, population=%lld, pi=%.2f, ok=%d\n",
+           age, population, pi, ok);
+
+    return 0;
+}
