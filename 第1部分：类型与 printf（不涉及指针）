@@ -52,3 +52,19 @@ int main(void) {
 
     return 0;
 }
+
+
+
+练习1：定义三个整数 a=7, b=2, c=10，打印它们的和与平均值（平均值用 double，保留2位小数）。格式示例：sum=19, avg=6.33
+#include <stdio.h>
+int main(void){
+    int a = 7;
+    int b = 2;
+    int c = 10;
+    int sum = a + b + c;
+    double avg = sum / 3.0;  // 用 3.0 触发小数除法（或写 (double)sum / 3）
+
+    printf("sum = %d\n", sum);
+    printf("avg = %.2f\n", avg);//打印平均值时可用 %.2f 保留两位小数
+    return 0;
+}
