@@ -1,0 +1,12 @@
+目标
+
+认识常用类型：int、long long、double、bool、size_t
+会用 printf 打印它们
+要点小抄
+
+int：常用整数
+long long：更大的整数
+double：小数
+bool：布尔（需要 #include <stdbool.h>，值为 0 或 1）
+size_t：表示“大小/长度”，打印用 %zu
+常用占位符：%d(int)、%lld(long long)、%f(double)、%.2f(保留2位小数)、%d(bool)、%zu(size_t)
